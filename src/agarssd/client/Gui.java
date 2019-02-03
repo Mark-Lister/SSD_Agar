@@ -6,13 +6,15 @@ import agarssd.model.World;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observer;
+import java.util.Observable;
 
-public class Gui extends JFrame {
+public class Gui extends JFrame implements Observer{
 
     private World world;
     private Player myPlayer;
     private JPanel panel;
-    private int size = 500;
+    private int size = 600;
     private boolean gameOver = false;
 
     public Gui() {
@@ -40,11 +42,7 @@ public class Gui extends JFrame {
         this.myPlayer = myPlayer;
     }
 
-    public void update(World world) {
-        this.world = world;
-        checkMyPlayerAlive();
-        panel.repaint();
-    }
+
 
     private void checkMyPlayerAlive() {
         if(gameOver) {
@@ -123,5 +121,11 @@ public class Gui extends JFrame {
                     (int) i.size * 2,
                     (int) i.size * 2);
         }
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+        this.world = (World) arg;
+        checkMyPlayerAlive();
+        panel.repaint();
     }
 }
